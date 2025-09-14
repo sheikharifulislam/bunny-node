@@ -8,11 +8,11 @@
         "dist"
     ],
     "scripts": {
-        "build": "npm run clean && tsc",
+        "build": "pnpm run clean && pnpm install && pnpm run check && tsc --emitDeclarationOnly && node ./esbuild.config.mjs",
         "build:watch": "tsc --watch",
         "clean": "rimraf node_modules dist",
-        "dev": "tsx dev/test.ts",
-        "dev:watch": "tsx watch dev/test.ts",
+        "dev": "tsx dev/index.ts",
+        "dev:watch": "tsx watch dev/index.ts",
         "test": "vitest run",
         "test:watch": "vitest",
         "test:dev": "tsx dev/test.ts",
@@ -23,8 +23,8 @@
         "format": "prettier --write \"src/**/*.ts\" \"dev/**/*.ts\" \"*.{js,json,md}\"",
         "format:check": "prettier --check \"src/**/*.ts\" \"dev/**/*.ts\" \"*.{js,json,md}\"",
         "format:staged": "pretty-quick --staged",
-        "check": "npm run type-check && npm run lint:check && npm run format:check",
-        "prepublishOnly": "npm run check && npm run test && npm run build",
+        "check": "pnpm run type-check && pnpm run lint:check && pnpm run format:check",
+        "prepublishOnly": "pnpm run check && pnpm run test && pnpm run build",
         "prepare": "husky"
     },
     "keywords": [
@@ -64,6 +64,7 @@
         "@types/node": "^24.4.0",
         "@typescript-eslint/eslint-plugin": "^8.43.0",
         "@typescript-eslint/parser": "^8.43.0",
+        "esbuild": "^0.25.9",
         "eslint": "^9.35.0",
         "eslint-config-prettier": "^10.1.8",
         "husky": "^9.1.7",
