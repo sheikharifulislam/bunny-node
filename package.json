@@ -1,34 +1,49 @@
 {
-    "name": "@bunny.net/node",
+    "name": "bunny-node-client",
     "version": "0.0.1",
     "description": "",
-    "main": "./dist/index.js",
-    "types": "./dist/index.d.ts",
-    "exports": {
-        ".": {
-            "import": "./dist/index.js",
-            "types": "./dist/index.d.ts"
-        }
-    },
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
     "files": [
         "dist"
     ],
     "scripts": {
-        "build": "tsc",
-        "start": "node dist/index.js",
-        "dev": "nodemon --exec ts-node src/index.ts",
-        "test": "jest",
-        "test:watch": "jest --watch",
-        "test:coverage": "jest --coverage",
-        "lint": "eslint src/**/*.ts",
-        "lint:fix": "eslint src/**/*.ts --fix",
-        "format": "prettier --write src/**/*.ts",
+        "build": "npm run clean && tsc",
+        "build:watch": "tsc --watch",
+        "clean": "rimraf node_modules dist",
+        "dev": "tsx dev/test.ts",
+        "dev:watch": "tsx watch dev/test.ts",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "test:dev": "tsx dev/test.ts",
         "type-check": "tsc --noEmit",
-        "clean": "rm -rf dist",
-        "postinstall": "npm run build"
+        "lint": "eslint src/ dev/ --ext .ts",
+        "lint:fix": "eslint src/ dev/ --ext .ts --fix",
+        "lint:check": "eslint src/ dev/ --ext .ts --max-warnings 0",
+        "format": "prettier --write \"src/**/*.ts\" \"dev/**/*.ts\" \"*.{js,json,md}\"",
+        "format:check": "prettier --check \"src/**/*.ts\" \"dev/**/*.ts\" \"*.{js,json,md}\"",
+        "format:staged": "pretty-quick --staged",
+        "check": "npm run type-check && npm run lint:check && npm run format:check",
+        "prepublishOnly": "npm run check && npm run test && npm run build",
+        "prepare": "husky"
     },
-    "keywords": [],
-    "author": "Sheikh Ariful Islam",
+    "keywords": [
+        "bunny",
+        "bunny-cdn",
+        "bunny-storage",
+        "cdn",
+        "storage",
+        "api-client",
+        "nodejs",
+        "typescript",
+        "file-upload",
+        "edge-storage"
+    ],
+    "author": {
+        "name": "Sheikh Ariful Islam",
+        "email": "sheikharifulislam101@gmail.com",
+        "url": "https://github.com/sheikharifulislam"
+    },
     "license": "MIT",
     "repository": {
         "type": "git",
@@ -38,11 +53,25 @@
         "url": "https://github.com/sheikharifulislam/bunny-node/issues"
     },
     "homepage": "https://github.com/sheikharifulislam/bunny-node#readme",
+    "funding": {
+        "type": "github",
+        "url": "https://github.com/sponsors/sheikharifulislam"
+    },
     "packageManager": "pnpm@10.6.2",
     "devDependencies": {
-        "@types/node": "^24.3.0",
-        "nodemon": "^3.1.10",
-        "ts-node": "^10.9.2",
-        "typescript": "^5.9.2"
+        "@commitlint/cli": "^19.8.1",
+        "@commitlint/config-conventional": "^19.8.1",
+        "@types/node": "^24.4.0",
+        "@typescript-eslint/eslint-plugin": "^8.43.0",
+        "@typescript-eslint/parser": "^8.43.0",
+        "eslint": "^9.35.0",
+        "eslint-config-prettier": "^10.1.8",
+        "husky": "^9.1.7",
+        "lint-staged": "^16.1.6",
+        "prettier": "^3.6.2",
+        "rimraf": "^6.0.1",
+        "tsx": "^4.20.5",
+        "typescript": "^5.9.2",
+        "vitest": "^3.2.4"
     }
 }
